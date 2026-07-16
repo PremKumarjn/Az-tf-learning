@@ -5,6 +5,8 @@ resource "azurerm_storage_account" "st1_vscode" {
     account_tier = var.azurerm_account_tier
     account_replication_type = var.azurerm_account_replication_type
 
+    tags = var.tags
+
     lifecycle {
         prevent_destroy = true
     }

@@ -13,6 +13,6 @@ variable "azurerm_account_tier" {
 variable "azurerm_account_replication_type" {
     type        = string
 }
-# variable "tags" {
-#     type = map(string)
-# }
+variable "tags" {
+    type = map(string)
+}

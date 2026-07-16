@@ -16,6 +16,10 @@ resource_group_name = {
     resource_group_1 = {
         name = "RG3-VSCode-Dev"
         location = "central india"
+        tag = {
+            Environment = "Dev"
+            owner = "prem"
+        }
     }
 }
 storage_account = {
@@ -25,6 +29,10 @@ storage_account = {
         location = "central india"
         account_tier = "Standard"
         account_replication_type = "LRS"
+        tag = {
+            Environment = "Dev"
+            owner = "prem"
+        }
     }
 }
 

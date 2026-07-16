@@ -7,7 +7,7 @@ variable "resource_group_name" {
     type = map(object({
         name     = string
         location = string
-        //tag      = map(string)
+        tag      = map(string)
     }))
     default = {}
 }
@@ -26,7 +26,7 @@ variable "storage_account" {
         location = string
         account_tier = string
         account_replication_type = string
-        //tag = map(string)
+        tag = map(string)
     }))
     default = {}
 }

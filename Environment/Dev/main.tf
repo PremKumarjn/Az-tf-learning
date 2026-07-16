@@ -15,6 +15,7 @@ module "resource_group" {
     azurerm_resource_group_name = each.value.name
     azurerm_location = each.value.location
 
+    tags = each.value.tag
     //tags = merge(var.common_tags, each.value.tag)
 }
 
@@ -30,6 +31,8 @@ module "storage_account" {
     azurerm_account_tier = each.value.account_tier
     azurerm_account_replication_type = each.value.account_replication_type
 
+    tags = each.value.tag
     depends_on = [module.resource_group]
     //tags = merge(var.common_tags, each.value.tag)
+
 }
