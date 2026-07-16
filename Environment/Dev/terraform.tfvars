@@ -18,7 +18,7 @@ resource_group_name = {
         location = "central india"
         tag = {
             Environment = "Dev"
-            owner = "prem"
+            Owner = "prem"
         }
     }
 }
@@ -31,8 +31,7 @@ storage_account = {
         account_replication_type = "LRS"
         tag = {
             Environment = "Dev"
-            owner = "prem"
+            Owner = "prem"
         }
     }
 }
-

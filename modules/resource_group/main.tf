@@ -4,6 +4,6 @@ resource "azurerm_resource_group" "rg1_vscode" {
     tags = var.tags
 
     lifecycle {
-        prevent_destroy = true
+        prevent_destroy = false
     }
 }
