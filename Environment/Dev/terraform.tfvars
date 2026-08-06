@@ -12,26 +12,28 @@ subscription_id = "2b6577e9-86ba-4f96-abd5-dad4e292559c"
 # account_tier = "Standard"
 # account_replication_type = "LRS"
 
-resource_group_name = { 
-    resource_group_1 = {
-        name = "RG3-VSCode-Dev"
-        location = "central india"
-        tag = {
-            Environment = "Dev"
-            Owner = "prem"
-        }
+resource_group_name = {
+  resource_group_1 = {
+    name     = "RG3-VSCode-Dev"
+    location = "central india"
+    tag = {
+      Environment = "Dev"
+      Owner       = "prem"
     }
+  }
 }
 storage_account = {
-    storage_account_1 = {
-        name = "demo1storage987"
-        resource_group_name = "RG3-VSCode-Dev"
-        location = "central india"
-        account_tier = "Standard"
-        account_replication_type = "LRS"
-        tag = {
-            Environment = "Dev"
-            Owner = "prem"
-        }
+  storage_account_1 = {
+    name                     = "demo1storage987"
+    resource_group_name      = "RG3-VSCode-Dev"
+    location                 = "central india"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    tag = {
+      Environment = "Dev"
+      Owner       = "prem"
     }
+    container_name        = "demo1container987"
+    container_access_type = "private"
+  }
 }

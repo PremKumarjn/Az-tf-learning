@@ -1,12 +1,12 @@
 variable "azurerm_resource_group_name" {
-    type        = string
+  type = string
 }
 
 variable "azurerm_location" {
-    type        = string
+  type = string
 }
 
 variable "tags" {
-    type = map(string)
-    //default = {}
+  type = map(string)
+  //default = {}
 }

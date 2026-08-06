@@ -1,15 +1,15 @@
 variable "subscription_id" {
-    type        = string
+  type = string
 }
 variable "resource_group_name" {
-    //type        = string
-    
-    type = map(object({
-        name     = string
-        location = string
-        tag      = map(string)
-    }))
-    default = {}
+  //type        = string
+
+  type = map(object({
+    name     = string
+    location = string
+    tag      = map(string)
+  }))
+  default = {}
 }
 # variable "location" {
 #     type        = string
@@ -20,15 +20,17 @@ variable "resource_group_name" {
 # }
 
 variable "storage_account" {
-    type        = map(object({
-        name = string
-        resource_group_name = string
-        location = string
-        account_tier = string
-        account_replication_type = string
-        tag = map(string)
-    }))
-    default = {}
+  type = map(object({
+    name                     = string
+    resource_group_name      = string
+    location                 = string
+    account_tier             = string
+    account_replication_type = string
+    tag                      = map(string)
+    container_name           = string
+    container_access_type    = string
+  }))
+  default = {}
 }
 
 # variable "storage_account_name" {
