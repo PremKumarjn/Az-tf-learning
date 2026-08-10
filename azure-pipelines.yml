@@ -28,6 +28,11 @@ steps:
   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
   displayName: 'Terraform Init'
 
+- script: |
+    pwd
+    ls -R
+  displayName: 'Debug Files'
+  
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
