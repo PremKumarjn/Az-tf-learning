@@ -10,37 +10,10 @@ steps:
 
 - task: TerraformInstaller@1
   inputs:
-    terraformVersion: 'latest'
-
-# - task: AzureCLI@2
-#   displayName: 'Login to Azure'
-#   inputs:
-#     azureSubscription: 'Terraform to azure infrastructure'
-#     scriptType: 'bash'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#       az account show
+    terraformVersion: latest
 
 - task: AzureCLI@2
-  displayName: 'Check Azure Login'
-  inputs:
-    azureSubscription: 'Terraform to azure infrastructure'
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az account show
-      az account list --output table
-
-- script: terraform init
-  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-  displayName: 'Terraform Init'
-
-- script: terraform validate
-  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-  displayName: 'Terraform Validate'
-
-- task: AzureCLI@2
-  displayName: 'Terraform Plan'
+  displayName: 'Terraform Workflow'
   inputs:
     azureSubscription: 'Terraform to azure infrastructure'
     scriptType: bash
@@ -51,7 +24,3 @@ steps:
       terraform init
       terraform validate
       terraform plan
-
-- script: terraform plan
-  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-  displayName: 'Terraform Plan'
