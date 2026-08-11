@@ -29,6 +29,19 @@ steps:
   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
   displayName: 'Terraform Validate'
 
+- task: AzureCLI@2
+  displayName: 'Terraform Plan'
+  inputs:
+    azureSubscription: 'Terraform to azure infrastructure'
+    scriptType: bash
+    scriptLocation: inlineScript
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+    inlineScript: |
+      az account show
+      terraform init
+      terraform validate
+      terraform plan
+
 - script: terraform plan
   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
   displayName: 'Terraform Plan'
