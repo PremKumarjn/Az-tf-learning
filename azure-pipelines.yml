@@ -12,14 +12,24 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
+# - task: AzureCLI@2
+#   displayName: 'Login to Azure'
+#   inputs:
+#     azureSubscription: 'Terraform to azure infrastructure'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#       az account show
+
 - task: AzureCLI@2
-  displayName: 'Login to Azure'
+  displayName: 'Check Azure Login'
   inputs:
     azureSubscription: 'Terraform to azure infrastructure'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
+    scriptType: bash
+    scriptLocation: inlineScript
     inlineScript: |
       az account show
+      az account list --output table
 
 - script: terraform init
   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
