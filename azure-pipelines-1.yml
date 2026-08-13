@@ -20,17 +20,17 @@ steps:
 
 - task: TerraformInstaller@1
   inputs:
-    terraformVersion: 'latest'
+    terraformVersion: '4.72.0'
 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendServiceArm: 'Terraform to azure infrastructure'
-    backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
-    backendAzureRmStorageAccountName: 'cicd1storage987'
-    backendAzureRmContainerName: 'cicd01container987'
-    backendAzureRmKey: 'dev.terraform.tfstate'
+    # backendServiceArm: 'Terraform to azure infrastructure'
+    # backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
+    # backendAzureRmStorageAccountName: 'cicd1storage987'
+    # backendAzureRmContainerName: 'cicd01container987'
+    # backendAzureRmKey: 'dev.terraform.tfstate'
 
 - task: TerraformTask@5
   inputs:
