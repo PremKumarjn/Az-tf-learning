@@ -20,7 +20,7 @@ steps:
 
 - task: TerraformInstaller@1
   inputs:
-    terraformVersion: '4.77.0'
+    terraformVersion: 'latest'
 
 - task: TerraformTask@5
   inputs:
