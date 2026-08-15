@@ -34,7 +34,7 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-    backendServiceArm: 'Terraform to azure infrastructure'
+    backendServiceArm: 'Azure-terraform to CICD'
     backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
     backendAzureRmStorageAccountName: 'cicd1storage987'
     backendAzureRmContainerName: 'cicd01container987'
@@ -49,6 +49,6 @@ steps:
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
-    command: 'plan'
+    command: 'planss'
     workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
-    environmentServiceNameAzureRM: 'Terraform to azure infrastructure'
+    environmentServiceNameAzureRM: 'Azure-terraform to CICD'
