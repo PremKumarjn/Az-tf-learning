@@ -41,12 +41,14 @@ steps:
     backendAzureRmKey: 'dev.terraform.tfstate'
 
 - task: TerraformTask@5
+  displayName: 'Step 3 - Terraform validate'
   inputs:
     provider: 'azurerm'
     command: 'validate'
     workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
 
 - task: TerraformTask@5
+  displayName: 'Step 3 - Terraform plan'
   inputs:
     provider: 'azurerm'
     command: 'planss'
