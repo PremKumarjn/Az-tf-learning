@@ -26,6 +26,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
     backendServiceArm: 'Terraform to azure infrastructure'
     backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
     backendAzureRmStorageAccountName: 'cicd1storage987'
@@ -36,9 +37,11 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
     environmentServiceNameAzureRM: 'Terraform to azure infrastructure'
