@@ -23,17 +23,17 @@ resource_group_name = {
   # }
 }
 storage_account = {
-  storage_account_1 = {
-    name                     = "cicd1storage9876"
-    resource_group_name      = "RG3-VSCode-Dev"
-    location                 = "central india"
-    account_tier             = "Standard"
-    account_replication_type = "LRS"
-    tag = {
-      Environment = "Dev"
-      Owner       = "prem"
-    }
-    container_name        = "cicd01container9876"
-    container_access_type = "private"
-  }
+  # storage_account_1 = {
+  #   name                     = "cicd1storage9876"
+  #   resource_group_name      = "RG3-VSCode-Dev"
+  #   location                 = "central india"
+  #   account_tier             = "Standard"
+  #   account_replication_type = "LRS"
+  #   tag = {
+  #     Environment = "Dev"
+  #     Owner       = "prem"
+  #   }
+  #   container_name        = "cicd01container9876"
+  #   container_access_type = "private"
+  # }
 }
