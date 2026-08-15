@@ -22,12 +22,18 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
+- script: |
+    terraform version
+    pwd
+    ls -la
+  displayName: 'Verify Terraform'
+
 - task: TerraformTask@5
   displayName: 'Step 2 - Terraform Init'
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
     backendServiceArm: 'Terraform to azure infrastructure'
     backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
     backendAzureRmStorageAccountName: 'cicd1storage987'
