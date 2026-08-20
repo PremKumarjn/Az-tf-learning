@@ -5,9 +5,6 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
-- checkout: self
-
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: latest
@@ -35,3 +32,10 @@ steps:
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
     environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'terraform-plan'
+    publishLocation: 'Container'
+
