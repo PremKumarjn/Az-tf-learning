@@ -12,15 +12,26 @@ steps:
   inputs:
     terraformVersion: latest
 
-- task: AzureCLI@2
-  displayName: 'Terraform Workflow'
+- task: TerraformTask@5
   inputs:
-    azureSubscription: 'Terraform to azure infrastructure'
-    scriptType: bash
-    scriptLocation: inlineScript
+    provider: 'azurerm'
+    command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-    inlineScript: |
-      az account show
-      terraform init
-      terraform validate
-      terraform plan
+    backendServiceArm: 'Azure-terraform to CICD'
+    backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
+    backendAzureRmStorageAccountName: 'cicd1storage987'
+    backendAzureRmContainerName: 'cicd01container987'
+    backendAzureRmKey: 'dev.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+    environmentServiceNameAzureRM: 'Azure-terraform to CICD'
