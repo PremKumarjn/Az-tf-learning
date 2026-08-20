@@ -34,12 +34,13 @@ steps:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+    commandOptions: '-out=tfplan'
     environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
 - task: PublishBuildArtifacts@1
   displayName: Terraform build Artifacts
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
     ArtifactName: 'terraform-plan'
     publishLocation: 'Container'
 
