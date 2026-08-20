@@ -37,6 +37,12 @@ steps:
     commandOptions: '-out=tfplan'
     environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
+
 - task: PublishBuildArtifacts@1
   displayName: Terraform build Artifacts
   inputs:
