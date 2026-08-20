@@ -10,6 +10,7 @@ steps:
     terraformVersion: latest
 
 - task: TerraformTask@5
+  displayName: Terraform init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -21,12 +22,14 @@ steps:
     backendAzureRmKey: 'dev.tfstate'
 
 - task: TerraformTask@5
+  displayName: Terraform Validate
   inputs:
     provider: 'azurerm'
     command: 'validate'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
 
 - task: TerraformTask@5
+  displayName: Terraform plan
   inputs:
     provider: 'azurerm'
     command: 'plan'
@@ -34,6 +37,7 @@ steps:
     environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
 - task: PublishBuildArtifacts@1
+  displayName: Terraform build Artifacts
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'terraform-plan'
