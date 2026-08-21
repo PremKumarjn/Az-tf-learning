@@ -15,6 +15,7 @@ steps:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
+  displayName: Terraform init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -35,6 +36,13 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+    environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
     environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
