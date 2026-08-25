@@ -49,11 +49,7 @@ stages:
             commandOptions: '-out=tfplan'
             environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
-        - task: PublishBuildArtifacts@1
-          inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
-            ArtifactName: 'tfstateplan'
-            publishLocation: 'Container'
+
         
         - task: CopyFiles@2
           inputs:
@@ -61,6 +57,13 @@ stages:
             Contents: '**'
             TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
 
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
+            ArtifactName: 'tfstateplan'
+            publishLocation: 'Container'
+
+          
 - stage: Apply 
   displayName: 'Terraform Apply Stage'
   dependsOn: Plan
