@@ -1,0 +1,93 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+
+- stage: plan
+  displayName: 'Terraform plan stage'
+
+  jobs:
+    - job: Terraformplan
+      displayName: 'Terraform plan'
+
+      steps:
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
+          
+        - task: TerraformTask@5
+          displayName: 'Terraform init'
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            backendServiceArm: 'Azure-terraform to CICD'
+            backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
+            backendAzureRmStorageAccountName: 'cicd1storage987'
+            backendAzureRmContainerName: 'cicd01container987'
+            backendAzureRmKey: 'dev.tfstate'
+
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            commandOptions: '-out=tfplan'
+            environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
+            ArtifactName: 'tfstateplan'
+            publishLocation: 'Container'
+        
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            Contents: '**'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
+
+- stage: Apply 
+  displayName: 'Terraform Apply Stage'
+  dependsOn: Plan
+
+  jobs:
+    - deployment: TerraformApply
+      displayName: 'Terraform Apply'
+      environment: 'Dev'
+
+      strategy: 
+        runOnce:
+          deploy:
+            
+            steps:
+              
+              - download: current
+                artifact: tfstateplan
+
+              - task: TerraformInstaller@1
+                inputs:
+                  terraformVersion: 'latest'
+              
+              - task: TerraformTask@5
+                inputs:
+                  provider: 'azurerm'
+                  command: 'apply'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
+                  commandOptions: '-auto-approve'
+                  environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
