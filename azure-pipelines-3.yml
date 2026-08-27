@@ -115,6 +115,6 @@ stages:
                   provider: 'azurerm'
                   command: 'apply'
                   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-                  commandOptions: 'tfstateplan'
+                  commandOptions: 'tfplan'
                   environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
