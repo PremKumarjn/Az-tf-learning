@@ -85,9 +85,13 @@ stages:
               
               - script: |
                   echo "System.DefaultWorkingDirectory"
+                  echo $(System.DefaultWorkingDirector)
+                  
                   echo "Pipeline Workspace"
+                  echo $(Pipeline.Workspace)
+
                   find $(Pipeline.Workspace) -type f
-                  displayName: 'Show downloaded files'
+                displayName: 'Show downloaded files'
                 # displayName: 'Check downloaded files'
 
               - task: TerraformInstaller@1
