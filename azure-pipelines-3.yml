@@ -62,7 +62,6 @@ stages:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
             ArtifactName: 'tfstateplan'
             publishLocation: 'Container'
-
           
 - stage: Apply 
   displayName: 'Terraform Apply Stage'
@@ -81,7 +80,13 @@ stages:
               
               - download: current
                 artifact: tfstateplan
-
+              
+              - script: |
+                  echo "System.DefaultWorkingDirectory"
+                  pwd
+                  find . -type f
+                displayName: 'Check downloaded files'
+                
               - task: TerraformInstaller@1
                 inputs:
                   terraformVersion: 'latest'
