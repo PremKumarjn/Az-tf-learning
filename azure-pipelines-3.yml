@@ -88,6 +88,7 @@ stages:
                 displayName: 'Check downloaded files'
                 
               - task: TerraformInstaller@1
+                displayName: 'Terraform install'
                 inputs:
                   terraformVersion: 'latest'
               
