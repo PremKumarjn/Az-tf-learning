@@ -90,7 +90,7 @@ stages:
                 inputs:
                   provider: 'azurerm'
                   command: 'apply'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
                   commandOptions: '-auto-approve'
                   environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
