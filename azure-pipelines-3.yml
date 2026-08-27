@@ -86,7 +86,18 @@ stages:
                   pwd
                   find . -type f
                 displayName: 'Check downloaded files'
-                
+
+              - task: TerraformTask@5
+                inputs:
+                  provider: 'azurerm'
+                  command: 'init'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+                  backendServiceArm: 'Azure-terraform to CICD'
+                  backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
+                  backendAzureRmStorageAccountName: 'cicd1storage987'
+                  backendAzureRmContainerName: 'cicd01container987'
+                  backendAzureRmKey: 'dev.tfstate'
+
               - task: TerraformInstaller@1
                 displayName: 'Terraform install'
                 inputs:
