@@ -54,7 +54,7 @@ stages:
         - task: CopyFiles@2
           inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-            Contents: 'tfstateplan'
+            Contents: 'tfplan'
             TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
 
         - task: PublishBuildArtifacts@1
