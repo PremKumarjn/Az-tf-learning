@@ -54,7 +54,7 @@ stages:
         - task: CopyFiles@2
           inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-            Contents: '**'
+            Contents: 'tfstateplan'
             TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
 
         - task: PublishBuildArtifacts@1
@@ -108,6 +108,6 @@ stages:
                   provider: 'azurerm'
                   command: 'apply'
                   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
-                  commandOptions: '-auto-approve'
+                  commandOptions: 'tfstateplan'
                   environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
