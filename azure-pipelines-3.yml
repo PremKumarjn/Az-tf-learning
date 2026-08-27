@@ -78,6 +78,8 @@ stages:
             
             steps:
               
+              - checkout: self
+              
               - download: current
                 artifact: tfstateplan
               
