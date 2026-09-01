@@ -41,6 +41,11 @@ stages:
             command: 'validate'
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
 
+        - script: |
+            terraform workspace select dev2 || terraform workspace new dev2
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          displayName: 'Select Workspace'
+          
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
