@@ -9,11 +9,70 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: plan
+    displayName: 'Terraform Plan stage'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    jobs:
+      - job: TerraformPlan
+        displayName: 'Terraform Plan'
+
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+              backendServiceArm: 'Azure-terraform to CICD'
+              backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
+              backendAzureRmStorageAccountName: 'cicd1storage987'
+              backendAzureRmContainerName: 'cicd01container987'
+              backendAzureRmKey: 'dev.tfstate'
+
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+              environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+              Contents: 'terraformplan'
+              TargetFolder: '$(build.artifactstagingdirectory)/Environment/Dev'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'terraformArtifactPlan'
+              publishLocation: 'Container'
+
+  - stage: Apply
+    displayName: 'Terraform Apply Stage'
+    
+    jobs:
+      - deployment: TerraformApply
+        displayName: 'Terraform Apply stage'
+        environment: dev
+
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - download: current
+                  artifact: terraformArtifactPlan
+
+                  
