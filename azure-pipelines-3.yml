@@ -126,10 +126,10 @@ stages:
                   command: 'init'
                   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
                   backendServiceArm: 'Azure-terraform to CICD'
-                  backendAzureRmResourceGroupName: 'RG3-VSCode-Dev'
-                  backendAzureRmStorageAccountName: 'cicd1storage987'
-                  backendAzureRmContainerName: 'cicd01container987'
-                  backendAzureRmKey: 'dev.tfstate'
+                  backendAzureRmResourceGroupName: '$(ResourceGroupName)' 
+                  backendAzureRmStorageAccountName: '$(StorageAccountName)'
+                  backendAzureRmContainerName: '$(ContainerName)'
+                  backendAzureRmKey: '$(AzureRmKey)'
               
               - task: TerraformTask@5
                 displayName: 'Terraform Apply'
