@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+- group: AzureResources
+
 pool:
   vmImage: ubuntu-latest
 
@@ -23,6 +26,13 @@ stages:
           inputs:
             terraformVersion: 'latest'
           
+        - script: |
+            echo $(ResourceGroupName)
+            echo $(StorageAccountName)
+            echo $(ContainerName)
+            echo $(BackendKey)
+          displayName: 'Test Variables'
+
         - task: TerraformTask@5
           displayName: 'Terraform init'
           inputs:
@@ -36,6 +46,7 @@ stages:
             backendAzureRmKey: '$(BackendKey)'
 
         - task: TerraformTask@5
+          displayName: 'Terraform Validate'
           inputs:
             provider: 'azurerm'
             command: 'validate'
@@ -47,6 +58,7 @@ stages:
         #   displayName: 'Select Workspace'
           
         - task: TerraformTask@5
+          displayName: 'Terraform Plan'
           inputs:
             provider: 'azurerm'
             command: 'plan'
@@ -57,12 +69,14 @@ stages:
 
         
         - task: CopyFiles@2
+          displayName: 'Copy File'
           inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
             Contents: 'tfplan'
             TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
 
         - task: PublishBuildArtifacts@1
+          displayName: 'Publish Build Artifact'
           inputs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
             ArtifactName: 'tfstateplan'
@@ -106,6 +120,7 @@ stages:
                   terraformVersion: 'latest'
 
               - task: TerraformTask@5
+                displayName: 'Terraform init'
                 inputs:
                   provider: 'azurerm'
                   command: 'init'
@@ -117,6 +132,7 @@ stages:
                   backendAzureRmKey: 'dev.tfstate'
               
               - task: TerraformTask@5
+                displayName: 'Terraform Apply'
                 inputs:
                   provider: 'azurerm'
                   command: 'apply'
