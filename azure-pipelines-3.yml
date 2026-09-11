@@ -45,6 +45,10 @@ stages:
             backendAzureRmContainerName: '$(ContainerName)'
             backendAzureRmKey: '$(BackendKey)'
 
+        - script: terraform fmt -check -recursive
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          displayName: 'Terraform Format check'
+
         - task: TerraformTask@5
           displayName: 'Terraform Validate'
           inputs:
@@ -65,8 +69,6 @@ stages:
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
             commandOptions: '-out=tfplan'
             environmentServiceNameAzureRM: 'Azure-terraform to CICD'
-
-
         
         - task: CopyFiles@2
           displayName: 'Copy File'
