@@ -56,6 +56,25 @@ stages:
             command: 'validate'
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
 
+        - script: |
+            curl -s 
+            https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+          displayName: 'Install tfsec'
+
+        - script: |
+            tfsec .
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          displayName: 'Terraform Security Scan'
+
+        - script: |
+            pip install checkov
+          displayName: 'Install Checkov'
+
+        - script: |
+            checkov -d .
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          displayName: 'Checkov scan'
+
         # - script: |
         #     terraform workspace select dev2 || terraform workspace new dev2
         #   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
