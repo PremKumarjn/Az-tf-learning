@@ -57,8 +57,7 @@ stages:
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
 
         - script: |
-            curl -s 
-            https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+            curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
             which tfsec
             tfsec --version
           displayName: 'Install tfsec'
