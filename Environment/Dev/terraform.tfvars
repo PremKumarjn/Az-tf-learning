@@ -14,7 +14,7 @@ subscription_id = "2b6577e9-86ba-4f96-abd5-dad4e292559c"
 
 resource_group_name = {
   resource_group_1 = {
-    name     = "RG5-VSCode-Dev"
+    name     = "RG4-VSCode-Dev"
     location = "central india"
     tag = {
       Environment = "Dev"
