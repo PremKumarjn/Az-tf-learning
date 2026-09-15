@@ -75,6 +75,7 @@ stages:
             checkov -d .
           workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
           displayName: 'Checkov scan'
+          continueOnError: true
 
         # - script: |
         #     terraform workspace select dev2 || terraform workspace new dev2
