@@ -33,6 +33,15 @@ variable "storage_account" {
   default = {}
 }
 
+variable "keyvault" {
+  type = map(object({
+    name = string
+    location = string
+    tenant_id = string
+    sku_name = string
+  }))
+  default = {}
+}
 # variable "storage_account_name" {
 #     type        = string
 # }
