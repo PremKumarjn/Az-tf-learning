@@ -41,9 +41,9 @@ storage_account = {
 
 keyvault = {
   "name" = {
-    name = "kv1-vscode-dev"
-    location = "central india"
-    sku_name = "standard"
-    tenant_id = "338b9762-29e2-4854-960d-56766f3fe79c"    
+    name      = "kv1-vscode-dev"
+    location  = "central india"
+    sku_name  = "standard"
+    tenant_id = "338b9762-29e2-4854-960d-56766f3fe79c"
   }
 }

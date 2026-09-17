@@ -42,12 +42,12 @@ module "storage_account" {
 
 module "keyvault" {
   for_each = var.keyvault
-  source = "../../modules/keyvault"
+  source   = "../../modules/keyvault"
 
-  azurerm_key_vault_name = each.value.name
-  azurerm_location = each.value.location
+  azurerm_key_vault_name     = each.value.name
+  azurerm_location           = each.value.location
   azurerm_key_vault_sku_name = each.value.sku_name
-  azurerm_tenant_id = each.value.tenant_id
+  azurerm_tenant_id          = each.value.tenant_id
 
   depends_on = [module.resource_group]
 }
