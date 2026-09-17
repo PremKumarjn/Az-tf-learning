@@ -50,4 +50,5 @@ module "keyvault" {
   azurerm_tenant_id          = each.value.tenant_id
 
   depends_on = [module.resource_group]
+  
 }
