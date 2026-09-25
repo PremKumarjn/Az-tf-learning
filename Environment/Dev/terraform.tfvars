@@ -41,7 +41,7 @@ storage_account = {
 
 keyvault = {
   "name" = {
-    name                = "KV1-vscode-dev"
+    name                = "KV1-VSCode-dev"
     resource_group_name = "RG4-VSCode-Dev"
     location            = "central india"
     sku_name            = "standard"
