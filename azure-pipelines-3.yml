@@ -49,6 +49,14 @@ stages:
           workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
           displayName: 'Terraform Format check'
 
+        - task: AzureKeyVault@2
+          displayName: 'Fetch Secrets from Key Vault'
+          inputs:
+            azureSubscription: 'Azure-terraform to CICD'
+            KeyVaultName: 'KV1-VSCode-dev'
+            SecretsFilter: '*'
+            RunAsPreJob: false
+
         - task: TerraformTask@5
           displayName: 'Terraform Validate'
           inputs:
