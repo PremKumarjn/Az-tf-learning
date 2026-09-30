@@ -6,6 +6,15 @@
 trigger:
 - main
 
+parameters:
+  - name: environment
+    displayName: Environment
+    type: string
+    default: Dev
+    values:
+      - Dev
+      - Prod
+
 variables:
 - group: AzureResources
 
@@ -38,7 +47,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
             backendServiceArm: 'Azure-terraform to CICD'
             backendAzureRmResourceGroupName: '$(ResourceGroupName)'
             backendAzureRmStorageAccountName: '$(StorageAccountName)'
@@ -46,7 +55,7 @@ stages:
             backendAzureRmKey: '$(BackendKey)'
 
         - script: terraform fmt -check -recursive
-          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
           displayName: 'Terraform Format check'
 
         - task: AzureKeyVault@2
@@ -62,7 +71,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'validate'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
 
         - script: |
             curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
@@ -72,7 +81,7 @@ stages:
 
         - script: |
             tfsec .
-          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
           displayName: 'Terraform Security Scan'
 
         - script: |
@@ -81,7 +90,7 @@ stages:
 
         - script: |
             checkov -d .
-          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
           displayName: 'Checkov scan'
           continueOnError: true
 
@@ -95,21 +104,21 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
             commandOptions: '-out=tfplan'
             environmentServiceNameAzureRM: 'Azure-terraform to CICD'
         
         - task: CopyFiles@2
           displayName: 'Copy File'
           inputs:
-            SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+            SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
             Contents: 'tfplan'
-            TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/${{parameters.environment }}'
 
         - task: PublishBuildArtifacts@1
           displayName: 'Publish Build Artifact'
           inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/${{parameters.environment}}'
             ArtifactName: 'tfstateplan'
             publishLocation: 'Container'
           
@@ -155,7 +164,7 @@ stages:
                 inputs:
                   provider: 'azurerm'
                   command: 'init'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
                   backendServiceArm: 'Azure-terraform to CICD'
                   backendAzureRmResourceGroupName: '$(ResourceGroupName)' 
                   backendAzureRmStorageAccountName: '$(StorageAccountName)'
@@ -167,7 +176,7 @@ stages:
                 inputs:
                   provider: 'azurerm'
                   command: 'apply'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
                   commandOptions: '-auto-approve $(Pipeline.Workspace)/tfstateplan/tfplan'
                   environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
