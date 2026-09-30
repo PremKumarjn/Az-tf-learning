@@ -42,6 +42,11 @@ stages:
             echo $(BackendKey)
           displayName: 'Test Variables'
 
+        - script: |
+            echo "Selected Environment:"
+            echo "{{ parameters.environment}}"
+          displayName: 'Show Everything'
+
         - task: TerraformTask@5
           displayName: 'Terraform init'
           inputs:
