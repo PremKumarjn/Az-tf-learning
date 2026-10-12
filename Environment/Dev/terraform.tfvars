@@ -34,8 +34,7 @@ storage_account = {
   #     Owner       = "prem"
   #   }
   # }
-  #   container_name        = "cicd01container9876"
-  #   container_access_type = "private"
+  #  
   # }
 }
 

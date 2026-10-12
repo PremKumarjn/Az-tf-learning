@@ -35,9 +35,9 @@ module "storage_account" {
   depends_on = [module.resource_group]
   //tags = merge(var.common_tags, each.value.tag)
 
-  azurerm_storage_container_name = each.value.container_name
+  //azurerm_storage_container_name = each.value.container_name
   //azurerm_storage_account_name = each.value.name
-  azurerm_container_access_type = each.value.container_access_type
+  //azurerm_container_access_type = each.value.container_access_type
 }
 
 module "keyvault" {
