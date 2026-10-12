@@ -10,12 +10,12 @@ resource "azurerm_storage_account" "st1_vscode" {
   public_network_access_enabled = false
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
-resource "azurerm_storage_container" "st1container_vscode" {
-  name                  = var.azurerm_storage_container_name
-  storage_account_id    = azurerm_storage_account.st1_vscode.id
-  container_access_type = var.azurerm_container_access_type
-}
+# resource "azurerm_storage_container" "st1container_vscode" {
+#   name                  = var.azurerm_storage_container_name
+#   storage_account_id    = azurerm_storage_account.st1_vscode.id
+#   container_access_type = var.azurerm_container_access_type
+# }

@@ -1,13 +1,13 @@
-terraform{
-    required_providers{
-        azurerm = {
-            source = "hashicorp/azurerm"
-            version = "4.77.0"
-        }
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "4.77.0"
     }
+  }
 }
+
 provider "azurerm" {
-    features {}
-    subscription_id = var.subscription_id
-    
+  features {}
+  subscription_id = var.subscription_id
 }
