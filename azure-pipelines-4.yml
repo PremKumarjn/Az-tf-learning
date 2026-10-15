@@ -44,7 +44,9 @@ stages:
               provider: 'azurerm'
               command: 'plan'
               workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/Dev'
+              commandOptions: '-out=terraformplan'
               environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
 
           - task: CopyFiles@2
             inputs:
@@ -53,8 +55,10 @@ stages:
               TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/Dev'
 
           - script: |
-              echo $($(System.DefaultWorkingDirectory)/Environment/Dev)
-              echo $($(Build.ArtifactStagingDirectory)/Environment/Dev)
+              echo $(System.DefaultWorkingDirectory)
+              echo $(Build.ArtifactStagingDirectory)
+              ls -la $(System.DefaultWorkingDirectory)/Environment/Dev
+              ls -la $(Build.ArtifactStagingDirectory)/Environment/Dev
 
           - task: PublishBuildArtifacts@1
             inputs:
