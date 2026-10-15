@@ -53,8 +53,8 @@ stages:
               TargetFolder: '$(build.artifactstagingdirectory)/Environment/Dev'
 
           - script: |
-              echo: $($(build.artifactstagingdirectory)/Environment/Dev)
-              echo: $($(build.artifactstagingdirectory)/Environment/Dev)
+              echo $($(build.artifactstagingdirectory)/Environment/Dev)
+              echo $($(build.artifactstagingdirectory)/Environment/Dev)
 
           - task: PublishBuildArtifacts@1
             inputs:
@@ -63,7 +63,7 @@ stages:
               publishLocation: 'Container'
           
           - script: |
-              echo: $($(Build.ArtifactStagingDirectory))
+              echo $($(Build.ArtifactStagingDirectory))
 
   - stage: Apply
     displayName: 'Terraform Apply Stage'
