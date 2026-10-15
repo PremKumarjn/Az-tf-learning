@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "st1_vscode" {
   public_network_access_enabled = false
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
