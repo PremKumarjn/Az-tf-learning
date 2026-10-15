@@ -50,11 +50,11 @@ stages:
             inputs:
               SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/Dev'
               Contents: 'terraformplan'
-              TargetFolder: '$(build.artifactstagingdirectory)/Environment/Dev'
+              TargetFolder: '$(Build.artifactstagingdirectory)/Environment/Dev'
 
           - script: |
-              echo $($(build.artifactstagingdirectory)/Environment/Dev)
-              echo $($(build.artifactstagingdirectory)/Environment/Dev)
+              echo $($(System.DefaultWorkingDirectory)/Environment/Dev)
+              echo $($(Build.artifactstagingdirectory)/Environment/Dev)
 
           - task: PublishBuildArtifacts@1
             inputs:
