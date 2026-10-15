@@ -52,11 +52,18 @@ stages:
               Contents: 'terraformplan'
               TargetFolder: '$(build.artifactstagingdirectory)/Environment/Dev'
 
+          - script: |
+              echo: $($(build.artifactstagingdirectory)/Environment/Dev)
+              echo: $($(build.artifactstagingdirectory)/Environment/Dev)
+
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
               ArtifactName: 'terraformArtifactPlan'
               publishLocation: 'Container'
+          
+          - script: |
+              echo: $($(Build.ArtifactStagingDirectory))
 
   - stage: Apply
     displayName: 'Terraform Apply Stage'
