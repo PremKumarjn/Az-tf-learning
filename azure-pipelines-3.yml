@@ -16,7 +16,12 @@ parameters:
       - Prod
 
 variables:
-- group: AzureResources
+
+- ${{ if eq(parameters.environment, 'Dev') }}:
+  - group: AzureResources
+
+- ${{ if eq(parameters.environment, 'Prod') }}:
+  - group: AzureResources-Prod
 
 pool:
   vmImage: ubuntu-latest
