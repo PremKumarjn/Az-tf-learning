@@ -139,7 +139,7 @@ stages:
   jobs:
     - deployment: TerraformApply
       displayName: 'Terraform Apply'
-      environment: 'Dev'
+      environment: '${{ parameters.environment }}'
 
       strategy: 
         runOnce:
