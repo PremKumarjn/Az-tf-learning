@@ -39,7 +39,7 @@ stages:
             environment: ${{ parameters.environment }}
         
         - script: terraform fmt -check -recursive 
-          workingDirectory: $(System.DefaultWorkingDirectory)/Environment/{{parameters.environment}}
+          workingDirectory: $(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}
           displayName: 'Terraform Format check'
 
         - task: TerraformTask@5
