@@ -38,12 +38,37 @@ stages:
           parameters:
             environment: ${{ parameters.environment }}
         
+        - script: terraform fmt -check -recursive 
+          workingDirectory: $(System.DefaultWorkingDirectory)/Environment/{{parameters.environment}}
+          displayName: 'Terraform Format check'
+
         - task: TerraformTask@5
           displayName: 'Terraform Validate'
           inputs:
             provider: azurerm
             command: validate
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
+
+        - script: |
+            curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+            which tfsec
+            tfsec --version
+          displayName: 'Install tfsec'
+
+        - script: |
+            tfsec .
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
+          displayName: 'Terraform Security Scan'
+
+        - script: |
+            pip install checkov
+          displayName: 'Install Checkov'
+
+        - script: |
+            checkov -d .
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
+          displayName: 'Checkov scan'
+          continueOnError: true
 
         - task: TerraformTask@5
           displayName: 'Terraform Plan'
@@ -53,6 +78,12 @@ stages:
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
             commandOptions: '-out=tfplan'
             environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
+            Contents: 'tfplan'
+            TargetFolder: '$(Build.ArtifactWorkingDIrectory)/Environment/${{parameters.environment}}'
 
 
 
