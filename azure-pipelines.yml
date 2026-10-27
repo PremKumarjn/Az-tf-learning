@@ -83,7 +83,47 @@ stages:
           inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
             Contents: 'tfplan'
-            TargetFolder: '$(Build.ArtifactWorkingDIrectory)/Environment/${{parameters.environment}}'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/${{parameters.environment}}'
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/Environment/${{parameters.environment}}'
+            ArtifactName: 'tfStatePlan'
+            publishLocation: 'Container'
+
+- stage: 
+  displayName: 'Terraform Apply Stage'
+  dependsOn: Plan
+
+  jobs:
+    - deployment: TerraformApply
+      displayName: 'Terraform Apply'
+      environment: '${{parameters.environment}}'
+
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: self
+
+              - download: current
+                artifact: tfstateplan
+
+              - task: TerraformInstaller@1
+                inputs:
+                  terraformVersion: 'latest'
+
+              - template: templates/terraform-init.yml
+                parameters:
+                  environment: ${{parameters.environment}}
+
+              - task: TerraformTask@5
+                inputs:
+                  provider: 'azurerm'
+                  command: 'apply'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
+                  commandOptions: '-auto-approve $(Pipeline.Workspace)/tfstateplan/tfplan'
+                  environmentServiceNameAzureRM: 'Azure-terraform to CICD'
 
 
 
