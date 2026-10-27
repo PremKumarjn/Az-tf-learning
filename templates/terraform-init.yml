@@ -1,0 +1,21 @@
+parameters:
+ - name: environment
+   displayName: Environment
+   type: string
+   default: Dev
+   values: 
+    - Dev
+    - Prod
+
+steps: 
+- task: 'TerraformTask@5'
+  displayName: 'Terraform Init'
+  inputs: 
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{ parameters.environment }}'
+    backendServiceArm: 'Azure-terraform to CICD'
+    backendAzureRmResourceGroupName: '$(ResourceGroupName)'
+    backendAzureRmStorageAccountName: '$(StorageAccountName)'
+    backendAzureRmContainerName: '$(ContainerName)'
+    backendAzureRmKey: '$(BackendKey)'
