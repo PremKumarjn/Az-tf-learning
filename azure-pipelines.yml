@@ -13,10 +13,10 @@ parameters:
 variables:
 
 - ${{ if eq(parameters.environment, 'Dev') }}:
-  - group: AzureResource
+  - group: AzureResources
 
 - ${{ if eq(parameters.environment, 'Prod') }}:
-  - group: AzureResource-Prod
+  - group: AzureResources-Prod
 
 pool:
  vmImage: ubuntu-latest
