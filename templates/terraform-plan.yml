@@ -1,0 +1,18 @@
+parameter:
+- name: environment
+  type: string
+  default: Dev
+  values: 
+    - Dev
+    - Prod
+
+steps: 
+- task: 'TerraformTask@5'
+  displayName: 'Terraform Plan'
+  inputs: 
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{ parameters.environment }}'
+    commandOptions: '-out=tfplan'
+    environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+

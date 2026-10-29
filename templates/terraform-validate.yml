@@ -1,0 +1,17 @@
+parameters:
+ - name: environment
+   displayName: Environment
+   type: string
+   default: Dev
+   values: 
+    - Dev
+    - Prod
+
+steps:
+- task: 'TerraformTask@5'
+  displayName: 'Terraform Validate'
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{ parameters.environment }}'
+    
