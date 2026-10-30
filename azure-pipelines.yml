@@ -101,7 +101,7 @@ stages:
 
         - script: |
             find $(Build.ArtifactStagingDirectory) -type f
-            displayName: 'Check Artifact Files'
+          displayName: 'Check Artifact Files'
 
         - task: PublishBuildArtifacts@1
           inputs:
