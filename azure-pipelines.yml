@@ -125,6 +125,14 @@ stages:
               #     find $(Pipeline.Workspace) -type f
               #     displayName: 'Show Downloaded Files'
 
+              - script: |
+                  echo "pipeline Workspace:"
+                  echo $(pipeline.Workspace)
+
+                  fine $(pipeline.Workspace) -type f
+                displayName: 'Show Downloaded files'
+                
+
               - template: templates/terraform-init.yml
                 parameters:
                   environment: ${{parameters.environment}}
