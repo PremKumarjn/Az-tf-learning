@@ -128,8 +128,9 @@ stages:
               - script: |
                   echo "pipeline Workspace:"
                   echo $(pipeline.Workspace)
-
-                  fine $(pipeline.Workspace) -type f
+                  
+                  echo "Downloaded Files:"
+                  find $(pipeline.Workspace) -type f
                 displayName: 'Show Downloaded files'
                 
 
