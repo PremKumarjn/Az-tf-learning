@@ -14,5 +14,6 @@ steps:
       provider: 'azurerm'
       command: 'apply'
       workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{ parameters.environment }}'
-
-      
+      commandOptions: '-auto-approve $(pipeline.workspace)/tfstateplan/tfplan'
+      environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+  
