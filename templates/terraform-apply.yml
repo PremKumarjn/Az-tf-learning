@@ -1,0 +1,18 @@
+parameters:
+  - name: environment
+    displayName: Environment
+    type: string
+    default: Dev
+    values: 
+      - Dev
+      - Prod
+
+steps:
+  - task: 'TerraformTask@5'
+    displayName: 'Terraform Apply'
+    inputs:
+      provider: 'azurerm'
+      command: 'apply'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{ parameters.environment }}'
+
+      
