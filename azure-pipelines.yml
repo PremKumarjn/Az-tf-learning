@@ -121,6 +121,10 @@ stages:
                 inputs:
                   terraformVersion: 'latest'
 
+              - script: |
+                  find $(Pipeline.Workspace) -type f
+                  displayName: 'Show Downloaded Files'
+
               - template: templates/terraform-init.yml
                 parameters:
                   environment: ${{parameters.environment}}
