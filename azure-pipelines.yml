@@ -129,7 +129,7 @@ stages:
 
               - script: |
                   echo "pipeline Workspace: $(Pipeline.Workspace)"
-                  find $(Pipeline.Workspace) -type -f
+                  find $(Pipeline.Workspace) -type f
                 displayName: 'Show Downloaded Artifact Files'
 
               - task: TerraformInstaller@1
