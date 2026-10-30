@@ -125,13 +125,9 @@ stages:
                 parameters:
                   environment: ${{parameters.environment}}
 
-              - task: TerraformTask@5
-                inputs:
-                  provider: 'azurerm'
-                  command: 'apply'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
-                  commandOptions: '-auto-approve $(Pipeline.Workspace)/tfStatePlan/tfplan'
-                  environmentServiceNameAzureRM: 'Azure-terraform to CICD'
+              - template: templates/terraform-apply.yml
+                parameters:
+                  environment: ${{ parameters.environment }}
 
 
 
