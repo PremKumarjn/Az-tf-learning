@@ -87,11 +87,21 @@ stages:
           parameters:
             environment: ${{ parameters.environment }}
 
+        - script: |
+            ls -lrt
+          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
+          displayName: 'Check plan File'
+
+
         - task: CopyFiles@2
           inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
             Contents: 'tfplan'
             TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/${{parameters.environment}}'
+
+        - script: |
+            find $(Build.ArtifactStagingDirectory) -type f
+            displayName: 'Check Artifact Files'
 
         - task: PublishBuildArtifacts@1
           inputs:
