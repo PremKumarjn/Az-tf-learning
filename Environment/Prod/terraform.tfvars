@@ -12,7 +12,7 @@ resource_group_name = {
 
 storage_account = {
   storage_account_details = {
-    name                     = "cicd1storage9876prod1"
+    name                     = "cicd1storage9876prod"
     resource_group_name      = "RG3-VSCode-Prod"
     location                 = "East US"
     account_tier             = "Standard"
