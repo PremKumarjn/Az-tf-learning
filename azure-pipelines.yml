@@ -109,7 +109,7 @@ stages:
             ArtifactName: 'tfStatePlan'
             publishLocation: 'Container'
 
-- stage: 
+- stage: Apply
   displayName: 'Terraform Apply Stage'
   dependsOn: Plan
 
