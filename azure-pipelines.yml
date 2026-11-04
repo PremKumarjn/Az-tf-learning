@@ -42,13 +42,6 @@ stages:
           workingDirectory: $(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}
           displayName: 'Terraform Format check'
 
-        # - task: TerraformTask@5
-        #   displayName: 'Terraform Validate'
-        #   inputs:
-        #     provider: azurerm
-        #     command: validate
-        #     workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment}}'
-
         - template: templates/terraform-validate.yml
           parameters:
             environment: ${{ parameters.environment }}
@@ -87,10 +80,10 @@ stages:
           parameters:
             environment: ${{ parameters.environment }}
 
-        - script: |
-            ls -lrt
-          workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
-          displayName: 'Check plan File'
+        # - script: |
+        #     ls -lrt
+        #   workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/${{parameters.environment }}'
+        #   displayName: 'Check plan File'
 
 
         - task: CopyFiles@2
@@ -99,9 +92,9 @@ stages:
             Contents: 'tfplan'
             TargetFolder: '$(Build.ArtifactStagingDirectory)/Environment/${{parameters.environment}}'
 
-        - script: |
-            find $(Build.ArtifactStagingDirectory) -type f
-          displayName: 'Check Artifact Files'
+        # - script: |
+        #     find $(Build.ArtifactStagingDirectory) -type f
+        #   displayName: 'Check Artifact Files'
 
         - task: PublishBuildArtifacts@1
           inputs:
@@ -127,10 +120,10 @@ stages:
               - download: current
                 artifact: tfStatePlan
 
-              - script: |
-                  echo "pipeline Workspace: $(Pipeline.Workspace)"
-                  find $(Pipeline.Workspace) -type f
-                displayName: 'Show Downloaded Artifact Files'
+              # - script: |
+              #     echo "pipeline Workspace: $(Pipeline.Workspace)"
+              #     find $(Pipeline.Workspace) -type f
+              #   displayName: 'Show Downloaded Artifact Files'
 
               - task: TerraformInstaller@1
                 inputs:
@@ -140,13 +133,13 @@ stages:
               #     find $(Pipeline.Workspace) -type f
               #     displayName: 'Show Downloaded Files'
 
-              - script: |
-                  echo "pipeline Workspace:"
-                  echo $(pipeline.Workspace)
+              # - script: |
+              #     echo "pipeline Workspace:"
+              #     echo $(pipeline.Workspace)
                   
-                  echo "Downloaded Files:"
-                  find $(pipeline.Workspace) -type f
-                displayName: 'Show Downloaded files'
+              #     echo "Downloaded Files:"
+              #     find $(pipeline.Workspace) -type f
+              #   displayName: 'Show Downloaded files'
                 
 
               - template: templates/terraform-init.yml
